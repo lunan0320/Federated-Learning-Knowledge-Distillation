@@ -1,4 +1,3 @@
-import femnist
 import torch
 import copy
 def Accuracy(y,y_predict):

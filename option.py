@@ -22,21 +22,21 @@ def args_parser():
                         help='number of steps to drop the lr')
     parser.add_argument('--use_lrschd', action="store_true", default=False,
                         help='Use lr rate scheduler')
-    parser.add_argument('--num_clients', default=10,
+    parser.add_argument('--num_clients',  type=int, default=10,
                         help='number of local models')
     
-    parser.add_argument('--num_classes', default=10,
+    parser.add_argument('--num_classes', type=int,default=10,
                         help='number of classes')
     
-    parser.add_argument('--sampling_rate', default=1,
+    parser.add_argument('--sampling_rate', type=float,default=1,
                         help='frac of local models to update')
-    parser.add_argument('--local_ep', default=5,
+    parser.add_argument('--local_ep',type=int, default=5,
                         help='iterations of local updating')
-    parser.add_argument('--beta', default=0.5,
+    parser.add_argument('--beta', type=float,default=0.5,
                         help='beta for non-iid distribution')
-    parser.add_argument('--seed', default=0,
+    parser.add_argument('--seed', type=int,default=0,
                         help='random seed for generating datasets')
-    parser.add_argument('--code_len', default=32,
+    parser.add_argument('--code_len', type=int,default=32,
                         help='length of code')
     parser.add_argument('--alg', default='FedAvg',
                         help='FedAvg, FedProx, Moon, FedMD, Fedproto, FedDFKD')
@@ -50,13 +50,13 @@ def args_parser():
     parser.add_argument('--std', type=float, default=2,
                         help='std of gaussian noise ')
     
-    parser.add_argument('--part', default=0.1,
+    parser.add_argument('--part', type=float,default=0.1,
                         help='percentage of each local data')
     
-    parser.add_argument('--sample', default=1,
+    parser.add_argument('--sample',type=float, default=1,
                         help='sample rate of clients')
     
-    parser.add_argument('--temp', default=0.5,
+    parser.add_argument('--temp', type=float,default=0.5,
                         help='temperture for soft prediction')
     
     parser.add_argument('--model', default= 'resnet18',
@@ -67,6 +67,5 @@ def args_parser():
     
     parser.add_argument('--eval_only', action="store_true", default=False,help='evaluate the model')
 
-    args = parser.parse_args('')
+    args = parser.parse_args()
     return args
-

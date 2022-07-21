@@ -1,0 +1,154 @@
+1.9.0+rocm4.2
+Namespace(alg='FedAvg', batch_size=64, beta=0.5, clip_grad=None, code_len=32, dataset='CIFAR10', eval_only=False, gamma=0.1, lam=0.1, local_ep=5, log_frq=5, lr=0.001, lr_sh_rate=10, model='resnet18', num_classes=10, num_clients=10, num_epochs=50, part=0.1, sampling_rate=1, seed=0, std=2, temp=0.5, upload_model=False, use_lrschd=False)
+Files already downloaded and verified
+Files already downloaded and verified
+Client 0 data distribution:
+[74, 9, 14, 5, 73, 89, 0, 248, 0, 0]
+Client 1 data distribution:
+[2, 3, 64, 157, 6, 14, 0, 63, 11, 0]
+Client 2 data distribution:
+[1, 0, 28, 75, 80, 21, 10, 81, 87, 1]
+Client 3 data distribution:
+[47, 106, 7, 3, 69, 65, 7, 1, 120, 23]
+Client 4 data distribution:
+[49, 295, 51, 74, 9, 34, 0, 0, 0, 0]
+Client 5 data distribution:
+[114, 6, 23, 6, 126, 0, 0, 12, 33, 0]
+Client 6 data distribution:
+[1, 22, 167, 2, 0, 12, 193, 3, 112, 0]
+Client 7 data distribution:
+[66, 0, 13, 60, 0, 101, 51, 0, 9, 84]
+Client 8 data distribution:
+[124, 15, 48, 48, 60, 94, 12, 1, 0, 366]
+Client 9 data distribution:
+[0, 12, 11, 36, 7, 36, 191, 72, 73, 10]
+Checkpoint dir: ./checkpoint/CIFAR10/
+# model parameters: 11193258
+
+ | Global Training Round : 1 |
+
+| Global Round : 0 | Client: 9 | Local Epoch : 0 | [0/492 (0%)]	Loss: 2.449992
+| Global Round : 0 | Client: 9 | Local Epoch : 1 | [0/492 (0%)]	Loss: 1.052439
+| Global Round : 0 | Client: 9 | Local Epoch : 2 | [0/492 (0%)]	Loss: 1.120411
+| Global Round : 0 | Client: 9 | Local Epoch : 3 | [0/492 (0%)]	Loss: 0.888334
+| Global Round : 0 | Client: 9 | Local Epoch : 4 | [0/492 (0%)]	Loss: 0.604813
+| Global Round : 0 | Client: 4 | Local Epoch : 0 | [0/518 (0%)]	Loss: 2.662145
+| Global Round : 0 | Client: 4 | Local Epoch : 1 | [0/518 (0%)]	Loss: 0.960214
+| Global Round : 0 | Client: 4 | Local Epoch : 2 | [0/518 (0%)]	Loss: 0.621696
+| Global Round : 0 | Client: 4 | Local Epoch : 3 | [0/518 (0%)]	Loss: 0.517861
+| Global Round : 0 | Client: 4 | Local Epoch : 4 | [0/518 (0%)]	Loss: 0.440194
+| Global Round : 0 | Client: 1 | Local Epoch : 0 | [0/368 (0%)]	Loss: 2.375244
+| Global Round : 0 | Client: 1 | Local Epoch : 1 | [0/368 (0%)]	Loss: 1.146836
+| Global Round : 0 | Client: 1 | Local Epoch : 2 | [0/368 (0%)]	Loss: 0.938471
+| Global Round : 0 | Client: 1 | Local Epoch : 3 | [0/368 (0%)]	Loss: 0.871903
+| Global Round : 0 | Client: 1 | Local Epoch : 4 | [0/368 (0%)]	Loss: 0.651868
+| Global Round : 0 | Client: 5 | Local Epoch : 0 | [0/380 (0%)]	Loss: 2.501322
+| Global Round : 0 | Client: 5 | Local Epoch : 1 | [0/380 (0%)]	Loss: 1.073381
+| Global Round : 0 | Client: 5 | Local Epoch : 2 | [0/380 (0%)]	Loss: 0.951889
+| Global Round : 0 | Client: 5 | Local Epoch : 3 | [0/380 (0%)]	Loss: 0.815223
+| Global Round : 0 | Client: 5 | Local Epoch : 4 | [0/380 (0%)]	Loss: 0.670534
+| Global Round : 0 | Client: 0 | Local Epoch : 0 | [0/530 (0%)]	Loss: 2.142080
+| Global Round : 0 | Client: 0 | Local Epoch : 1 | [0/530 (0%)]	Loss: 0.726593
+| Global Round : 0 | Client: 0 | Local Epoch : 2 | [0/530 (0%)]	Loss: 0.811296
+| Global Round : 0 | Client: 0 | Local Epoch : 3 | [0/530 (0%)]	Loss: 0.538172
+| Global Round : 0 | Client: 0 | Local Epoch : 4 | [0/530 (0%)]	Loss: 0.668474
+| Global Round : 0 | Client: 3 | Local Epoch : 0 | [0/504 (0%)]	Loss: 2.552128
+| Global Round : 0 | Client: 3 | Local Epoch : 1 | [0/504 (0%)]	Loss: 1.312755
+| Global Round : 0 | Client: 3 | Local Epoch : 2 | [0/504 (0%)]	Loss: 1.352101
+| Global Round : 0 | Client: 3 | Local Epoch : 3 | [0/504 (0%)]	Loss: 0.852314
+| Global Round : 0 | Client: 3 | Local Epoch : 4 | [0/504 (0%)]	Loss: 0.605674
+| Global Round : 0 | Client: 2 | Local Epoch : 0 | [0/443 (0%)]	Loss: 2.437689
+| Global Round : 0 | Client: 2 | Local Epoch : 1 | [0/443 (0%)]	Loss: 1.404946
+| Global Round : 0 | Client: 2 | Local Epoch : 2 | [0/443 (0%)]	Loss: 1.339307
+| Global Round : 0 | Client: 2 | Local Epoch : 3 | [0/443 (0%)]	Loss: 0.784844
+| Global Round : 0 | Client: 2 | Local Epoch : 4 | [0/443 (0%)]	Loss: 0.832689
+| Global Round : 0 | Client: 6 | Local Epoch : 0 | [0/520 (0%)]	Loss: 2.734502
+| Global Round : 0 | Client: 6 | Local Epoch : 1 | [0/520 (0%)]	Loss: 1.146821
+| Global Round : 0 | Client: 6 | Local Epoch : 2 | [0/520 (0%)]	Loss: 0.617886
+| Global Round : 0 | Client: 6 | Local Epoch : 3 | [0/520 (0%)]	Loss: 0.491843
+| Global Round : 0 | Client: 6 | Local Epoch : 4 | [0/520 (0%)]	Loss: 0.368961
+| Global Round : 0 | Client: 7 | Local Epoch : 0 | [0/432 (0%)]	Loss: 2.299362
+| Global Round : 0 | Client: 7 | Local Epoch : 1 | [0/432 (0%)]	Loss: 1.494010
+| Global Round : 0 | Client: 7 | Local Epoch : 2 | [0/432 (0%)]	Loss: 1.218380
+| Global Round : 0 | Client: 7 | Local Epoch : 3 | [0/432 (0%)]	Loss: 0.983028
+| Global Round : 0 | Client: 7 | Local Epoch : 4 | [0/432 (0%)]	Loss: 0.776008
+| Global Round : 0 | Client: 8 | Local Epoch : 0 | [0/807 (0%)]	Loss: 2.240609
+| Global Round : 0 | Client: 8 | Local Epoch : 0 | [640/807 (83%)]	Loss: 1.525077
+| Global Round : 0 | Client: 8 | Local Epoch : 1 | [0/807 (0%)]	Loss: 1.532717
+| Global Round : 0 | Client: 8 | Local Epoch : 1 | [640/807 (83%)]	Loss: 1.025759
+| Global Round : 0 | Client: 8 | Local Epoch : 2 | [0/807 (0%)]	Loss: 0.931918
+| Global Round : 0 | Client: 8 | Local Epoch : 2 | [640/807 (83%)]	Loss: 0.915869
+| Global Round : 0 | Client: 8 | Local Epoch : 3 | [0/807 (0%)]	Loss: 0.659309
+| Global Round : 0 | Client: 8 | Local Epoch : 3 | [640/807 (83%)]	Loss: 1.018818
+| Global Round : 0 | Client: 8 | Local Epoch : 4 | [0/807 (0%)]	Loss: 0.908291
+| Global Round : 0 | Client: 8 | Local Epoch : 4 | [640/807 (83%)]	Loss: 0.982285
+average loss:   1.0959669978576045
+average test accuracy: 0.4390625
+
+ | Global Training Round : 2 |
+
+| Global Round : 1 | Client: 6 | Local Epoch : 0 | [0/520 (0%)]	Loss: 0.448690
+| Global Round : 1 | Client: 6 | Local Epoch : 1 | [0/520 (0%)]	Loss: 0.627920
+| Global Round : 1 | Client: 6 | Local Epoch : 2 | [0/520 (0%)]	Loss: 0.492962
+| Global Round : 1 | Client: 6 | Local Epoch : 3 | [0/520 (0%)]	Loss: 0.409947
+| Global Round : 1 | Client: 6 | Local Epoch : 4 | [0/520 (0%)]	Loss: 0.473287
+| Global Round : 1 | Client: 8 | Local Epoch : 0 | [0/807 (0%)]	Loss: 0.504260
+| Global Round : 1 | Client: 8 | Local Epoch : 0 | [640/807 (83%)]	Loss: 1.170546
+| Global Round : 1 | Client: 8 | Local Epoch : 1 | [0/807 (0%)]	Loss: 0.985642
+| Global Round : 1 | Client: 8 | Local Epoch : 1 | [640/807 (83%)]	Loss: 0.880585
+| Global Round : 1 | Client: 8 | Local Epoch : 2 | [0/807 (0%)]	Loss: 0.758663
+| Global Round : 1 | Client: 8 | Local Epoch : 2 | [640/807 (83%)]	Loss: 0.684255
+| Global Round : 1 | Client: 8 | Local Epoch : 3 | [0/807 (0%)]	Loss: 0.630526
+| Global Round : 1 | Client: 8 | Local Epoch : 3 | [640/807 (83%)]	Loss: 0.541798
+| Global Round : 1 | Client: 8 | Local Epoch : 4 | [0/807 (0%)]	Loss: 0.432725
+| Global Round : 1 | Client: 8 | Local Epoch : 4 | [640/807 (83%)]	Loss: 0.270002
+| Global Round : 1 | Client: 4 | Local Epoch : 0 | [0/518 (0%)]	Loss: 0.358455
+| Global Round : 1 | Client: 4 | Local Epoch : 1 | [0/518 (0%)]	Loss: 0.907179
+| Global Round : 1 | Client: 4 | Local Epoch : 2 | [0/518 (0%)]	Loss: 0.716665
+| Global Round : 1 | Client: 4 | Local Epoch : 3 | [0/518 (0%)]	Loss: 0.437217
+| Global Round : 1 | Client: 4 | Local Epoch : 4 | [0/518 (0%)]	Loss: 0.590531
+| Global Round : 1 | Client: 1 | Local Epoch : 0 | [0/368 (0%)]	Loss: 0.505531
+| Global Round : 1 | Client: 1 | Local Epoch : 1 | [0/368 (0%)]	Loss: 0.982261
+| Global Round : 1 | Client: 1 | Local Epoch : 2 | [0/368 (0%)]	Loss: 0.822218
+| Global Round : 1 | Client: 1 | Local Epoch : 3 | [0/368 (0%)]	Loss: 0.530551
+| Global Round : 1 | Client: 1 | Local Epoch : 4 | [0/368 (0%)]	Loss: 0.462853
+| Global Round : 1 | Client: 7 | Local Epoch : 0 | [0/432 (0%)]	Loss: 0.311411
+| Global Round : 1 | Client: 7 | Local Epoch : 1 | [0/432 (0%)]	Loss: 1.020785
+| Global Round : 1 | Client: 7 | Local Epoch : 2 | [0/432 (0%)]	Loss: 0.894442
+| Global Round : 1 | Client: 7 | Local Epoch : 3 | [0/432 (0%)]	Loss: 0.611946
+| Global Round : 1 | Client: 7 | Local Epoch : 4 | [0/432 (0%)]	Loss: 0.522454
+| Global Round : 1 | Client: 2 | Local Epoch : 0 | [0/443 (0%)]	Loss: 0.592591
+| Global Round : 1 | Client: 2 | Local Epoch : 1 | [0/443 (0%)]	Loss: 1.025483
+| Global Round : 1 | Client: 2 | Local Epoch : 2 | [0/443 (0%)]	Loss: 0.822444
+| Global Round : 1 | Client: 2 | Local Epoch : 3 | [0/443 (0%)]	Loss: 0.732297
+| Global Round : 1 | Client: 2 | Local Epoch : 4 | [0/443 (0%)]	Loss: 0.529014
+| Global Round : 1 | Client: 9 | Local Epoch : 0 | [0/492 (0%)]	Loss: 0.445220
+| Global Round : 1 | Client: 9 | Local Epoch : 1 | [0/492 (0%)]	Loss: 0.781513
+| Global Round : 1 | Client: 9 | Local Epoch : 2 | [0/492 (0%)]	Loss: 0.797583
+| Global Round : 1 | Client: 9 | Local Epoch : 3 | [0/492 (0%)]	Loss: 0.349043
+| Global Round : 1 | Client: 9 | Local Epoch : 4 | [0/492 (0%)]	Loss: 0.598512
+| Global Round : 1 | Client: 0 | Local Epoch : 0 | [0/530 (0%)]	Loss: 0.682500
+| Global Round : 1 | Client: 0 | Local Epoch : 1 | [0/530 (0%)]	Loss: 0.940276
+| Global Round : 1 | Client: 0 | Local Epoch : 2 | [0/530 (0%)]	Loss: 0.483289
+| Global Round : 1 | Client: 0 | Local Epoch : 3 | [0/530 (0%)]	Loss: 0.519528
+| Global Round : 1 | Client: 0 | Local Epoch : 4 | [0/530 (0%)]	Loss: 0.461726
+| Global Round : 1 | Client: 3 | Local Epoch : 0 | [0/504 (0%)]	Loss: 0.579929
+| Global Round : 1 | Client: 3 | Local Epoch : 1 | [0/504 (0%)]	Loss: 1.417718
+| Global Round : 1 | Client: 3 | Local Epoch : 2 | [0/504 (0%)]	Loss: 0.926426
+| Global Round : 1 | Client: 3 | Local Epoch : 3 | [0/504 (0%)]	Loss: 0.667494
+| Global Round : 1 | Client: 3 | Local Epoch : 4 | [0/504 (0%)]	Loss: 0.496822
+| Global Round : 1 | Client: 5 | Local Epoch : 0 | [0/380 (0%)]	Loss: 0.636238
+| Global Round : 1 | Client: 5 | Local Epoch : 1 | [0/380 (0%)]	Loss: 0.832568
+| Global Round : 1 | Client: 5 | Local Epoch : 2 | [0/380 (0%)]	Loss: 0.985198
+| Global Round : 1 | Client: 5 | Local Epoch : 3 | [0/380 (0%)]	Loss: 0.387114
+| Global Round : 1 | Client: 5 | Local Epoch : 4 | [0/380 (0%)]	Loss: 0.410517
+average loss:   0.73266674471043
+average test accuracy: 0.5203125
+
+ | Global Training Round : 3 |
+
+| Global Round : 2 | Client: 6 | Local Epoch : 0 | [0/520 (0%)]	Loss: 0.328948
+| Global Round : 2 | Client: 6 | Local Epoch : 1 | [0/520 (0%)]	Loss: 0.309127
+| Global Round : 2 | Client: 6 | Local Epoch : 2 | [0/520 (0%)]	Loss: 0.265223
+| Global Round : 2 | Client: 6 | Local Epoch : 3 | [0/520 (0%)]	Loss: 0.196628
+| Global Round : 2 | Client: 6 | Local Epoch : 4 | [0/520 (0%)]	Loss: 0.333859

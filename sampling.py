@@ -5,7 +5,6 @@ from torch.utils.data import Dataset
 import torch
 import copy
 from torchvision import datasets, transforms
-import femnist
 
 class LocalDataset(Dataset):
     """
