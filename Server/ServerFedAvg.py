@@ -49,6 +49,7 @@ class ServerFedAvg(Server):
             print("average loss:  ", loss_avg)
             print('average test accuracy:', test_accuracy / self.args.num_clients)
         print('Training is completed.')
+        self.global_model.load_state_dict(global_weights)
         end_time = time.time()
         print('running time: {} s '.format(end_time - start_time))
         reporter.report()
