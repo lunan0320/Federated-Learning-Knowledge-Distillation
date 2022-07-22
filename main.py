@@ -117,6 +117,7 @@ server.train()
 
 
 server.global_test_accuracy()
+
 save_path = checkpoint_dir + args_hash + '.pth'
 if args.upload_model == True:
     server.Save_CheckPoint(save_path)

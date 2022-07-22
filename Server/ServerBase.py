@@ -26,7 +26,7 @@ class Server(object):
             y_pred = p.argmax(1)
             accuracy += Accuracy(y,y_pred)
             cnt += 1
-        return accuracy/cnt
+        print('global test accuracy: ', accuracy/cnt)
     
     
     def Save_CheckPoint(self, save_path):
