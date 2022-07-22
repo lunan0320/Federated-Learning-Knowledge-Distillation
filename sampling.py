@@ -101,9 +101,9 @@ def partition_data(n_users, alpha=0.5,rand_seed = 0, dataset = 'cifar10'):
         apply_transform = transforms.Compose(
             [transforms.ToTensor(),
              transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-        train_dataset = datasets.CIFAR100(data_dir, split='train', download=True,
+        train_dataset = datasets.SVHN(data_dir, split='train', download=True,
                                        transform=apply_transform)
-        test_dataset = datasets.CIFAR100(data_dir, split='test', download=True,
+        test_dataset = datasets.SVHN(data_dir, split='test', download=True,
                                       transform=apply_transform)
         y_train = np.array(train_dataset.labels)
         y_test = np.array(test_dataset.labels)
