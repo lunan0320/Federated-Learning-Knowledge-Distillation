@@ -8,50 +8,41 @@ Python3.6
 We used pipreqs to generate the requirements.txt, thus we have the minimal packages needed.  
 
 #### Code structure 
-* train.py //For training and evaluating the model 
+* main.py //For training the model 
 * models.py //Our VAEs model for FMNIST, CIFAR10/100
 * sampling.py // functions that generate non-iid datasets for federated learning
-* util.py // define functions that compute accuracy synthesize images and other general functions
-* Localupdate.py // define functions for locally updating models with FedAvg, FedProx, Moon, FedMix and FedDPMS
+* utils.py // define functions that compute accuracy, soft prediction and model averaging
+* mem_utils.py // Library for monitoring memory usage and training time
+* option.py // define hyper-parameters
+* Server/*.py // object definition for server in each method
+* Client/*.py // object definition for client in each method
 
 #### Parameters
-* --dataset: 'CIFAR10', 'CIFAR100', 'FMNIST'
+* --dataset: 'CIFAR10', 'CIFAR100', ' SVHN', 'EMNIST'
 * --batch_size: 64 by defalut 
 * --num_epochs: number of global rounds, 50 by defalut
 * --lr: learning rate, 0.001 by defalut
 * --lr_sh_rate: period of learning rate decay, 10 by defalut
 * --dropout_rate: drop out rate for each layer, 0.2 by defalut
-* --tag: 'centralized', 'federated'
+* --clip_grad: maximum norm for gradient
 * --num_users: number of clients, 10 by defalut
-* --update_frac: proportion of clients send updates per round, 1 by defalut
+* --sampling_rate: proportion of clients send updates per round, 1 by defalut
 * --local_ep: local epoch, 5 by defalut
 * --beta: concentration parameter for Dirichlet distribution: 0.5 by defalut
 * --seed: random seed(for better reproducting experiments): 0 by defalut
-* --mini： use part of samples in the dataset: 1 by defalut
-* --moon_mu: hyper-parameter mu for moon algorithm, 5 by defalut
-* --moon_temp: temperature for moon algorithm, 0.5 by defalut
-* --prox_mu： hyper-parameter mu for prox algorithm, 0.001 by defalut
-* --pretrain： number of preliminary rounds, 20 by defalut
-* --gen_num: desired generation number for each class, 50 by defalut
-* --std: standard deviation by Differential Noise, 4 by defalut
+* --std: standard deviation by Differential Noise, 2 by defalut
 * --code_len: length of latent vector, 32 by defalut
-* --alg: 'FedAvg, FedProx, Moon, FedVAE, DPMS, FedMix'
-* --vae_mu: hyper-parameter for FedVAE and FedDPMS: 0.05 by defalut
-* --fedmix_lam: lambda for fedmix: 0.05 by defalut
+* --alg: 'FedAvg, FedProx, Moon, FedMD, Fedproto, FedDFKD'
 * --eval_only: only ouput the testing accuracy during training and the running time
+* --part: percentage of each local data
+* --temp: temperture for soft prediction
+* --lam: hyper-parameter for loss2
+* --gamma: hyper-parameter for loss3
+* --model: CNN resnet18 shufflenet
+* --upload_model: allow clients to upload models to the server
 
 #### Running the code for training and evaluation
 We mainly use a .sh files to execute multiple expriements in parallel. 
 The exprimenets are saved in checkpoint with unique id. Also, when the dataset is downloaded for the first time it takes a while. 
 
-example: 
 
-(1) for training a DPMS model   
-```
-python3 train.py --dataset 'CIFAR100' --batch_size 64 --lr 0.001 --num_epochs 50 --dropout_rate 0.2 --tag 'federated' --num_users 10 --update_frac 1 --local_ep 5 --beta 0.5 --seed 0 --mini 1 --pretrain 20 --gen_num 50 --std 4 --code_len 128 --alg 'DPMS' --vae_mu 0.05
-```
-
-(2) for test the trained and saved model   
-```
-python3 train.py --dataset 'CIFAR100' --batch_size 64 --lr 0.001 --num_epochs 50 --dropout_rate 0.2 --tag 'federated' --num_users 10 --update_frac 1 --local_ep 5 --beta 0.5 --seed 0 --mini 1 --pretrain 20 --gen_num 50 --std 4 --code_len 128 --alg 'DPMS' --vae_mu 0.05 --eval_only
-```
