@@ -1,5 +1,5 @@
-# FedDFKD
-This repository is for summer intern's project: Communication-Efficient Federated Learning with heterogenous clients with Data-Free Knowledge Distillation
+# FedHKD
+This repository is for ICLR2023 paper: [The Best of Both Worlds Accurate Global and Personalized Models through Federated Learning with Data-Free Hyper-Knowledge Distillation](https://arxiv.org/abs/2301.08968)
 
 #### Code Instructions: 
 #### Environment 
@@ -39,10 +39,21 @@ We used pipreqs to generate the requirements.txt, thus we have the minimal packa
 * --lam: hyper-parameter for loss2
 * --gamma: hyper-parameter for loss3
 * --model: CNN resnet18 shufflenet
-* --upload_model: allow clients to upload models to the server
+* --save_model: save checkpoints of the model
 
 #### Running the code for training and evaluation
 We mainly use a .sh files to execute multiple expriements in parallel. 
 The exprimenets are saved in checkpoint with unique id. Also, when the dataset is downloaded for the first time it takes a while. 
 
+#### Acknowledgement
+This work is funded by Toyota Motor Corporation. We thank all staffs in AI/ML Infrastructure & Data Lab. We can not finish this work without their help.
+
+#### Citeation
+Please cite our paper, if you happen to use this code:
+`@article{chen2023best,
+  title={The Best of Both Worlds: Accurate Global and Personalized Models through Federated Learning with Data-Free Hyper-Knowledge     Distillation},
+  author={Chen, Huancheng and Vikalo, Haris and others},
+  journal={arXiv preprint arXiv:2301.08968},
+  year={2023}
+}`
 

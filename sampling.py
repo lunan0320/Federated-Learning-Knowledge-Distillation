@@ -140,8 +140,6 @@ def partition_data(n_users, alpha=0.5,rand_seed = 0, dataset = 'cifar10'):
         net_dataidx_map_test[j] = idx_batch_test[j]
    
         
-#     traindata_cls_counts = record_net_data_stats(y_train, net_dataidx_map)
-
     return (train_dataset, test_dataset,net_dataidx_map, net_dataidx_map_test)
 
 

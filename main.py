@@ -9,8 +9,6 @@ import hashlib
 import argparse
 
 
-
-# packages from CityChan
 from models import CNNFemnist,ResNet18,ShuffLeNet
 from sampling import LocalDataset, LocalDataloaders, partition_data
 from option import args_parser
@@ -19,20 +17,17 @@ from Server.ServerFedAvg import ServerFedAvg
 from Server.ServerFedProx import ServerFedProx
 from Server.ServerFedMD import ServerFedMD 
 from Server.ServerFedProto import ServerFedProto
-from Server.ServerFedDFKD import ServerFedDFKD
+from Server.ServerFedHKD import ServerFedHKD
 
 
 
-torch.set_default_dtype(torch.float64)
 print(torch.__version__)
 torch.cuda.is_available()
-device = torch.device("cuda:0")
-args = args_parser()
 np.set_printoptions(threshold=np.inf)
-# change available gpu number 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3,4,5,6,7'
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device.type)
 
-
+args = args_parser()
 print(args)
 args_hash = ''
 for k,v in vars(args).items():
@@ -80,8 +75,9 @@ print('Checkpoint dir:', checkpoint_dir)
 
 
 
-
+print(args.model)
 if args.model == 'CNN':
+    # for EMNIST 62 classes
     global_model = CNNFemnist(args, code_length=args.code_len, num_classes = args.num_classes)
     
 if args.model == 'resnet18':
@@ -92,7 +88,7 @@ if args.model == 'shufflenet':
 
    
 print('# model parameters:', sum(param.numel() for param in global_model.parameters()))
-global_model = nn.DataParallel(global_model)
+# global_model = nn.DataParallel(global_model)
 global_model.to(device)
 
 
@@ -107,19 +103,15 @@ if args.alg == 'FedMD':
     server = ServerFedMD(args,global_model,Loaders_train,Loaders_test,global_loader_test,testset,logger,device)
 if args.alg == 'FedProto':    
     server = ServerFedProto(args,global_model,Loaders_train,Loaders_test,global_loader_test,logger,device)
-if args.alg == 'FedDFKD':    
-    server = ServerFedDFKD(args,global_model,Loaders_train,Loaders_test,global_loader_test,logger,device)
+if args.alg == 'FedHKD':    
+    server = ServerFedHKD(args,global_model,Loaders_train,Loaders_test,global_loader_test,logger,device)
 
 
 server.Create_Clints()
 server.train()
 
-
-
-server.global_test_accuracy()
-
 save_path = checkpoint_dir + args_hash + '.pth'
-if args.upload_model == True:
+if args.save_model == True:
     server.Save_CheckPoint(save_path)
     print('Model is saved on: ')
     print(save_path)

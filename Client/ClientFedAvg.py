@@ -36,7 +36,7 @@ class ClientFedAvg(Client):
                 X = X.to(self.device)
                 y = y.to(self.device)
                 optimizer.zero_grad()
-                p = self.model(X).double()
+                _,p = self.model(X)
                 loss = self.ce(p,y)               
                 loss.backward()
                 if self.args.clip_grad != None:

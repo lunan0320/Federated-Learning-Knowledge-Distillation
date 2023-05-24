@@ -41,10 +41,10 @@ def args_parser():
     parser.add_argument('--alg', default='FedAvg',
                         help='FedAvg, FedProx, Moon, FedMD, Fedproto, FedDFKD')
     
-    parser.add_argument('--lam', type=float, default=0.1,
+    parser.add_argument('--lam', type=float, default=0.05,
                         help='hyper-parameter for loss2')
     
-    parser.add_argument('--gamma', type=float, default=0.1,
+    parser.add_argument('--gamma', type=float, default=0.05,
                         help='hyper-parameter for loss3')
     
     parser.add_argument('--std', type=float, default=2,
@@ -53,8 +53,6 @@ def args_parser():
     parser.add_argument('--part', type=float,default=0.1,
                         help='percentage of each local data')
     
-    parser.add_argument('--sample',type=float, default=1,
-                        help='sample rate of clients')
     
     parser.add_argument('--temp', type=float,default=0.5,
                         help='temperture for soft prediction')
@@ -62,8 +60,8 @@ def args_parser():
     parser.add_argument('--model', default= 'resnet18',
                         help='CNN resnet18 shufflenet')
     
-    parser.add_argument('--upload_model', action="store_true", default= False,
-                        help='allow clients to upload models to the server')
+    parser.add_argument('--save_model', action="store_true", default= False,
+                        help='saved model parameters')
     
     parser.add_argument('--eval_only', action="store_true", default=False,help='evaluate the model')
 

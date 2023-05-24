@@ -37,7 +37,7 @@ class ClientFedMD(Client):
                 X = X.to(self.device)
                 y = y.to(self.device)
                 optimizer.zero_grad()
-                p = self.model(X).double()
+                _,p = self.model(X)
                 loss = self.ce(p,y)               
                 loss.backward()
                 if self.args.clip_grad != None:
@@ -67,14 +67,14 @@ class ClientFedMD(Client):
                 X = X.to(self.device)
                 y = y.to(self.device)
                 optimizer.zero_grad()
-                Z = self.model(X).double()
+                _,Z = self.model(X)
                 loss1 = self.ce(Z,y)
                 loss2 = torch.tensor(0.0).to(self.device)
                 for idx, (X_pub,y_pub) in enumerate(self.loader_pub):
                     if idx == batch_idx:
                         X_pub = X_pub.to(self.device)
                         y_pub = y_pub.to(self.device)
-                        Z_pub = self.model(X_pub).double()
+                        _,Z_pub = self.model(X_pub)
                         Q_pub = soft_predict(Z_pub,temp).to(self.device)
                         loss2 -= self.kld(Q_pub,global_soft_prediction[idx].to(self.device))
                 
@@ -95,12 +95,12 @@ class ClientFedMD(Client):
     def generate_knowledge(self, temp):
         self.model.to(self.device)
         self.model.eval()
-        num_classes = self.model.module.num_classes
+        num_classes = self.model.num_classes
         soft_predictions = []
         for batch_idx, (X, y) in enumerate(self.loader_pub):
             X = X.to(self.device)
             y = y
-            Z = self.model(X) 
+            _,Z = self.model(X) 
             Q = soft_predict(Z,temp).to(self.device).detach().cpu()
             soft_predictions.append(Q)
             del X

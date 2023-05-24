@@ -40,7 +40,7 @@ class CNNFemnist(nn.Module):
     def forward(self, x):
         z = self.feature_extractor(x)
         p = self.classifier(z)
-        return p
+        return z,p
        
         
 class ResNet18(nn.Module):
@@ -54,7 +54,7 @@ class ResNet18(nn.Module):
     def forward(self,x):
         z = self.feature_extractor(x)
         p = self.classifier(z)
-        return p
+        return z,p
     
 class ShuffLeNet(nn.Module):
     def __init__(self, args,code_length=64,num_classes = 10):
@@ -67,4 +67,4 @@ class ShuffLeNet(nn.Module):
     def forward(self,x):
         z = self.feature_extractor(x)
         p = self.classifier(z)
-        return p
+        return z,p

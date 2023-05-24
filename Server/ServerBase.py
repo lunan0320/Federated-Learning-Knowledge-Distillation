@@ -22,11 +22,11 @@ class Server(object):
         for batch_idx, (X, y) in enumerate(self.global_testloader):
             X = X.to(self.device)
             y = y.to(self.device)
-            p = self.global_model(X).double()
+            _,p = self.global_model(X)
             y_pred = p.argmax(1)
             accuracy += Accuracy(y,y_pred)
             cnt += 1
-        print('global test accuracy: ', accuracy/cnt)
+        return accuracy/cnt
     
     
     def Save_CheckPoint(self, save_path):

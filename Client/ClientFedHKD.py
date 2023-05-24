@@ -12,7 +12,7 @@ import torch.nn.functional as F
 from utils import Accuracy,soft_predict
 from Client.ClientBase import Client
 import gc
-class ClientFedProto(Client):
+class ClientFedHKD(Client):
     """
     This class is for train the local model with input global model(copied) and output the updated weight
     args: argument 
@@ -37,7 +37,7 @@ class ClientFedProto(Client):
                 X = X.to(self.device)
                 y = y.to(self.device)
                 optimizer.zero_grad()
-                _, p = self.model(X)
+                _,p = self.model(X)
                 loss = self.ce(p,y)               
                 loss.backward()
                 if self.args.clip_grad != None:
@@ -55,20 +55,23 @@ class ClientFedProto(Client):
         return self.model.state_dict(),sum(epoch_loss) / len(epoch_loss)
 
     
-    def update_weights_Proto(self,global_features, gamma, global_round):
+    def update_weights_HKD(self,global_features, global_soft_prediction, lam, gamma, temp, global_round):
         self.model.to(self.device)
         self.model.train()
         epoch_loss = []
         optimizer = optim.Adam(self.model.parameters(),lr=self.args.lr)
         scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=self.args.lr_sh_rate, gamma=0.5)
         tensor_global_features = self.dict_to_tensor(global_features).to(self.device)
+        tensor_global_soft_prediction = self.dict_to_tensor(global_soft_prediction).to(self.device)
         for iter in range(self.args.local_ep):
             batch_loss = []
             for batch_idx, (X, y) in enumerate(self.trainloader):
                 X = X.to(self.device)
                 y = y.to(self.device)
                 optimizer.zero_grad()
-                F,Z = self.model.feature_extractor(X)
+                F,Z = self.model(X)
+                Z_help = self.model.classifier(tensor_global_features)
+                Q_help = soft_predict(Z_help,temp).to(self.device)
                 loss1 = self.ce(Z,y)
                 target_features = copy.deepcopy(F.data)
 
@@ -81,19 +84,21 @@ class ClientFedProto(Client):
                 target_features = target_features.to(self.device)
                 if len(global_features) == 0:
                     loss2 = 0*loss1
+                    loss3 = 0*loss1
                 else:
-                    loss2 = self.mse(F,target_features)
-                loss = loss1 + gamma*loss2
+                    loss2 = -self.kld(Q_help,tensor_global_soft_prediction)
+                    loss3 = self.mse(F,target_features)
+                loss = loss1 + lam*loss2 + gamma*loss3
                 loss.backward()
                 if self.args.clip_grad != None:
                     nn.utils.clip_grad_norm_(self.model.parameters(), max_norm = self.args.clip_grad)
                 nn.utils.clip_grad_norm_(self.model.parameters(), max_norm =1.1)
                 optimizer.step()
                 if batch_idx % 10 == 0:
-                    print('| Global Round : {} | Local Epoch : {} | [{}/{} ({:.0f}%)]\tLoss1: {:.6f} Loss2: {:.6f}  '.format(
+                    print('| Global Round : {} | Local Epoch : {} | [{}/{} ({:.0f}%)]\tLoss1: {:.6f} Loss2: {:.6f}  Loss3: {:.6f} '.format(
                         global_round, iter, batch_idx * len(X),
                         len(self.trainloader.dataset),
-                        100. * batch_idx / len(self.trainloader), loss1.item(),loss2.item()))
+                        100. * batch_idx / len(self.trainloader), loss1.item(),loss2.item(),loss3.item()))
                 self.logger.add_scalar('loss', loss.item())
                 batch_loss.append(loss.item())
             epoch_loss.append(sum(batch_loss)/len(batch_loss))
@@ -101,7 +106,7 @@ class ClientFedProto(Client):
         return self.model.state_dict(), sum(epoch_loss) / len(epoch_loss)
     
     # generate knowledge for FedDFKD
-    def generate_knowledge(self):
+    def generate_knowledge(self, temp):
         self.model.to(self.device)
         self.model.eval()        
         local_features = {}
@@ -113,8 +118,8 @@ class ClientFedProto(Client):
         for batch_idx, (X, y) in enumerate(self.trainloader):
             X = X.to(self.device)
             y = y
-            F, Z = self.model(X) 
-            Q = soft_predict(Z,self.args.temp).to(self.device)
+            F,Z = self.model(X)
+            Q = soft_predict(Z,temp).to(self.device)
             m = y.shape[0]
             for i in range(len(y)):
                 if y[i].item() in local_features:
@@ -130,22 +135,34 @@ class ClientFedProto(Client):
             del Q
             gc.collect()
             
-        features = self.local_knowledge_aggregation(local_features)
+        features,soft_predictions = self.local_knowledge_aggregation(local_features,local_soft_prediction, std = self.args.std)
         
-        return features
+        return (features,soft_predictions)
     
-    def local_knowledge_aggregation(self,local_features):
+    def local_knowledge_aggregation(self,local_features,local_soft_prediction, std):
         agg_local_features = dict()
+        agg_local_soft_prediction = dict()
+        feature_noise = std*torch.randn(self.args.code_len).to(self.device)
         for [label, features] in local_features.items():
             if len(features) > 1:
                 feature = 0 * features[0].data
                 for i in features:
                     feature += i.data   
-                agg_local_features[label] = [feature / len(features)]
+                agg_local_features[label] = [feature / len(features) + feature_noise]
             else:
-                agg_local_features[label] = [features[0].data]
-        
-        return agg_local_features
+                agg_local_features[label] = [features[0].data + feature_noise]
+                
+        for [label, soft_prediction] in local_soft_prediction.items():
+            if len(soft_prediction) > 1:
+                soft = 0 * soft_prediction[0].data
+                for i in soft_prediction:
+                    soft += i.data
+
+                agg_local_soft_prediction[label] = [soft / len(soft_prediction) ]
+            else:
+                agg_local_soft_prediction[label] = [soft_prediction[0].data]
+                
+        return agg_local_features,agg_local_soft_prediction
     
     def dict_to_tensor(self, dic):
         lit = []

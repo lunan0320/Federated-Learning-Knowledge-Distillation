@@ -40,7 +40,7 @@ class Client(object):
         for batch_idx, (X, y) in enumerate(self.testloader):
             X = X.to(self.device)
             y = y.to(self.device)
-            p = self.model(X).double()
+            _, p = self.model(X)
             y_pred = p.argmax(1)
             accuracy += Accuracy(y,y_pred)
             cnt += 1

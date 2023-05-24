@@ -39,7 +39,7 @@ class ClientFedProx(Client):
                 X = X.to(self.device)
                 y = y.to(self.device).long()
                 optimizer.zero_grad()
-                p = self.model(X).double()
+                _,p = self.model(X)
                 y_pred = p.argmax(1)
                 loss1 = self.ce(p,y)
                 fed_prox_reg = 0.0

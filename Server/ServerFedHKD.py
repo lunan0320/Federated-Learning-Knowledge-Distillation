@@ -4,7 +4,7 @@ import torch
 import copy
 from utils import Accuracy
 from Server.ServerBase import Server
-from Client.ClientFedMD import ClientFedMD
+from Client.ClientFedHKD import ClientFedHKD
 from tqdm import tqdm
 import numpy as np
 from utils import average_weights
@@ -13,20 +13,41 @@ import time
 from sampling import LocalDataset, LocalDataloaders, partition_data
 import gc
 
-class ServerFedMD(Server):
-    def __init__(self, args, global_model,Loader_train,Loaders_local_test,Loader_global_test, pub_test,logger,device):
+class ServerFedHKD(Server):
+    def __init__(self, args, global_model,Loader_train,Loaders_local_test,Loader_global_test,logger,device):
         super().__init__(args, global_model,Loader_train,Loaders_local_test,Loader_global_test,logger,device)
-        dict_pub = [np.random.randint(low=0,high=10000,size = 1000)]
-        self.public_data = LocalDataloaders(pub_test,dict_pub,args.batch_size,ShuffleorNot = False,frac=1)[0]
+
     
     def Create_Clints(self):
-
-        
         for idx in range(self.args.num_clients):
-            self.LocalModels.append(ClientFedMD(self.args, copy.deepcopy(self.global_model),self.Loaders_train[idx], self.Loaders_local_test[idx], loader_pub = self.public_data, idx=idx, logger=self.logger, code_length = self.args.code_len, num_classes = self.args.num_classes, device=self.device))
+            self.LocalModels.append(ClientFedHKD(self.args, copy.deepcopy(self.global_model),self.Loaders_train[idx], self.Loaders_local_test[idx], idx=idx, logger=self.logger, code_length = self.args.code_len, num_classes = self.args.num_classes, device=self.device))
             
-            
+    def global_knowledge_aggregation(self, features,soft_prediction):
+        global_local_features = dict()
+        global_local_soft_prediction = dict()
+        for [label, features] in features.items():
+            if len(features) > 1:
+                feature = 0 * features[0].data
+                for i in features:
+                    feature += i.data
+                global_local_features[label] = [feature / len(features)]
+            else:
+                global_local_features[label] = [features[0].data]
+
+        for [label, soft_prediction] in soft_prediction.items():
+            if len(soft_prediction) > 1:
+                soft = 0 * soft_prediction[0].data
+                for i in soft_prediction:
+                    soft += i.data
+                global_local_soft_prediction[label] = [soft / len(soft_prediction)]
+            else:
+                global_local_soft_prediction[label] = [soft_prediction[0].data]
+
+        return global_local_features,global_local_soft_prediction
+
     def train(self):
+        global_features = {}
+        global_soft_prediction = {}
         reporter = MemReporter()
         start_time = time.time()
         train_loss = []
@@ -49,25 +70,19 @@ class ServerFedMD(Server):
                     test_accuracy += acc
                     
                 else:
-                    w, loss = self.LocalModels[idx].update_weights_MD(global_round=epoch, knowledges = global_soft_prediciton, lam = 0.1, temp = self.args.temp)
+                    w, loss = self.LocalModels[idx].update_weights_HKD(global_round=epoch, global_features=global_features, global_soft_prediction=global_soft_prediction, lam = self.args.lam, gamma = self.args.gamma, temp = self.args.temp)
                     local_losses.append(copy.deepcopy(loss))
                     local_weights.append(copy.deepcopy(w))
                     acc = self.LocalModels[idx].test_accuracy()
                     test_accuracy += acc
                     
-                knowledges = self.LocalModels[idx].generate_knowledge(temp=self.args.temp)
-                Knowledges.append(torch.stack(knowledges))
-            global_soft_prediciton = []
-            batch_pub = Knowledges[0].shape[0]
-            for i in range(batch_pub):
-                num = Knowledges[0].shape[1]
-                soft_label = torch.zeros(num,self.args.num_classes)
-                for idx in idxs_users:
-                    soft_label += Knowledges[idx][i]
-                soft_label = soft_label/ len(idxs_users)
-                global_soft_prediciton.append(soft_label)
-            del Knowledges
-            gc.collect()
+                local_features,local_soft_predictions  = self.LocalModels[idx].generate_knowledge(temp = self.args.temp)
+                global_features.update(local_features)
+                global_soft_prediction.update(local_soft_predictions)
+                del local_features
+                del local_soft_predictions
+                gc.collect()
+ 
 
              # update global weights
             global_weights = average_weights(local_weights)

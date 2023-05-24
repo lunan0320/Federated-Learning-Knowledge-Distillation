@@ -47,7 +47,9 @@ class ServerFedAvg(Server):
             loss_avg = sum(local_losses) / len(local_losses)
             train_loss.append(loss_avg)
             print("average loss:  ", loss_avg)
-            print('average test accuracy:', test_accuracy / self.args.num_clients)
+            print('average local test accuracy:', test_accuracy / self.args.num_clients)
+            print('global test accuracy: ', self.global_test_accuracy())
+            
         print('Training is completed.')
         self.global_model.load_state_dict(global_weights)
         end_time = time.time()
