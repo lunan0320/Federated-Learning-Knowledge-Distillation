@@ -51,10 +51,12 @@ This work is funded by Toyota Motor Corporation. We thank all staffs in AI/ML In
 #### Citeation
 Please cite our paper, if you happen to use this code:
 
-`@article{chen2023best,
-  title={The Best of Both Worlds: Accurate Global and Personalized Models through Federated Learning with Data-Free Hyper-Knowledge Distillation}, 
+```
+@inproceedings{chen2023best,
+  title={The Best of Both Worlds: Accurate Global and Personalized Models through Federated Learning with Data-Free Hyper-Knowledge Distillation},  
   author={Chen, Huancheng and Vikalo, Haris and others},
   journal={arXiv preprint arXiv:2301.08968},
   year={2023}
-}`
+}
+```
 
