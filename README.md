@@ -18,7 +18,7 @@ We used pipreqs to generate the requirements.txt, thus we have the minimal packa
 * Client/*.py // object definition for client in each method
 
 #### Parameters
-* --dataset: 'CIFAR10', 'CIFAR100', ' SVHN', 'EMNIST'
+* --dataset: 'CIFAR10', 'CIFAR100', ' SVHN'
 * --batch_size: 64 by defalut 
 * --num_epochs: number of global rounds, 50 by defalut
 * --lr: learning rate, 0.001 by defalut
