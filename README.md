@@ -32,7 +32,7 @@ We used pipreqs to generate the requirements.txt, thus we have the minimal packa
 * --seed: random seed(for better reproducting experiments): 0 by defalut
 * --std: standard deviation by Differential Noise, 2 by defalut
 * --code_len: length of latent vector, 32 by defalut
-* --alg: 'FedAvg, FedProx, Moon, FedMD, Fedproto, FedDFKD'
+* --alg: 'FedAvg, FedProx, Moon, FedMD, Fedproto, FedHKD'
 * --eval_only: only ouput the testing accuracy during training and the running time
 * --part: percentage of each local data
 * --temp: temperture for soft prediction
