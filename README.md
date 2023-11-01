@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FedHKD
 This is an official repository for ICLR2023 paper: [The Best of Both Worlds Accurate Global and Personalized Models through Federated Learning with Data-Free Hyper-Knowledge Distillation](https://arxiv.org/abs/2301.08968)
 
@@ -59,3 +60,7 @@ Please cite our paper, if you happen to use this code:
 }
 ```
 
+=======
+# Federated-Learning-Knowledge-Distillation
+repo in several methods FedAvg, FedMD, FedProto, FedProx, FedHKD.
+>>>>>>> 2f76c4085a329ce3146e2ab5b4babe1ae73aa6a6
