@@ -1,13 +1,6 @@
 # Federated-Learning-Knowledge-Distillation
 repo in several methods FedAvg, FedMD, FedProto, FedProx, FedHKD.
-# FedHKD
-This is an official repository for ICLR2023 paper: [The Best of Both Worlds Accurate Global and Personalized Models through Federated Learning with Data-Free Hyper-Knowledge Distillation](https://arxiv.org/abs/2301.08968)
 
-#### Code Instructions: 
-#### Environment 
-Python3.6  
-
-We used pipreqs to generate the requirements.txt, thus we have the minimal packages needed.  
 
 #### Code structure 
 * main.py //For training the model 
