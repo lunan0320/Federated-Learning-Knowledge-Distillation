@@ -24,7 +24,7 @@ from Server.ServerFedHKD import ServerFedHKD
 print(torch.__version__)
 torch.cuda.is_available()
 np.set_printoptions(threshold=np.inf)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 print(device.type)
 
 args = args_parser()

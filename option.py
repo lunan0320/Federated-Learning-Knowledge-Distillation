@@ -38,7 +38,7 @@ def args_parser():
                         help='random seed for generating datasets')
     parser.add_argument('--code_len', type=int,default=32,
                         help='length of code')
-    parser.add_argument('--alg', default='FedAvg',
+    parser.add_argument('--alg', default='FedHKD',
                         help='FedAvg, FedProx, Moon, FedMD, Fedproto, FedDFKD')
     
     parser.add_argument('--lam', type=float, default=0.05,
@@ -62,7 +62,8 @@ def args_parser():
     
     parser.add_argument('--save_model', action="store_true", default= False,
                         help='saved model parameters')
-    
+    parser.add_argument('--upload_model', action="store_true", default= True,
+                        help='upload parameters')
     parser.add_argument('--eval_only', action="store_true", default=False,help='evaluate the model')
 
     args = parser.parse_args()

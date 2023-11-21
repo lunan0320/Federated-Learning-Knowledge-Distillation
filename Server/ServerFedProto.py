@@ -74,7 +74,7 @@ class ServerFedProto(Server):
 
              # update global weights
             global_weights = average_weights(local_weights)
-
+            self.global_model.load_state_dict(global_weights)
             loss_avg = sum(local_losses) / len(local_losses)
             train_loss.append(loss_avg)
             print("average loss:  ", loss_avg)
@@ -82,7 +82,6 @@ class ServerFedProto(Server):
             print('global test accuracy: ', self.global_test_accuracy())
             
         print('Training is completed.')
-        self.global_model.load_state_dict(global_weights)
         end_time = time.time()
         print('running time: {} s '.format(end_time - start_time))
         reporter.report()
